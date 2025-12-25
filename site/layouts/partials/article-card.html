@@ -1,0 +1,38 @@
+<article class="article-card">
+    <div class="article-image">
+        {{ if .Params.image }}
+        <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy">
+        {{ else }}
+        <img src="{{ "/images/default-thumbnail.jpg" | relURL }}" alt="{{ .Title }}" loading="lazy">
+        {{ end }}
+    </div>
+
+    <div class="article-content">
+        <h3 class="article-title">
+            <a href="{{ .Params.sourceUrl }}" target="_blank" rel="noopener noreferrer">
+                {{ .Title }}
+            </a>
+        </h3>
+
+        <div class="article-meta">
+            <span class="article-source">{{ .Params.source }}</span>
+            <span class="article-date">{{ .Date.Format "Jan 2, 2006" }}</span>
+        </div>
+
+        {{ if .Params.description }}
+        <p class="article-description">{{ .Params.description }}</p>
+        {{ end }}
+
+        {{ if .Params.coins }}
+        <div class="article-coins">
+            {{ range .Params.coins }}
+            <span class="coin-tag">{{ . | upper }}</span>
+            {{ end }}
+        </div>
+        {{ end }}
+
+        <a href="{{ .Params.sourceUrl }}" target="_blank" rel="noopener noreferrer" class="read-more">
+            Read Full Article →
+        </a>
+    </div>
+</article>

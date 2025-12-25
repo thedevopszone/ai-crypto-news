@@ -1,0 +1,25 @@
+baseURL = "https://yourusername.github.io/ai-crypto-news/"
+languageCode = "en-us"
+title = "Crypto News Daily"
+theme = ""
+
+[params]
+  description = "Latest cryptocurrency news for Bitcoin and top 99 altcoins, updated daily"
+  author = "Crypto News Daily"
+  dateFormat = "January 2, 2006"
+
+[taxonomies]
+  coin = "coins"
+  source = "sources"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[sitemap]
+  changefreq = "daily"
+  priority = 0.5
