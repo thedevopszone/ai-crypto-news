@@ -1,12 +1,12 @@
-baseURL = "https://yourusername.github.io/ai-crypto-news/"
-languageCode = "en-us"
-title = "Crypto News Daily"
+baseURL = "/"
+languageCode = "de"
+title = "Krypto News Täglich"
 theme = ""
 
 [params]
-  description = "Latest cryptocurrency news for Bitcoin and top 99 altcoins, updated daily"
-  author = "Crypto News Daily"
-  dateFormat = "January 2, 2006"
+  description = "Aktuelle Kryptowährungs-Nachrichten für Bitcoin und Top-99-Altcoins, täglich aktualisiert"
+  author = "Krypto News Täglich"
+  dateFormat = "2. January 2006"
 
 [taxonomies]
   coin = "coins"

@@ -1,9 +1,9 @@
-{{ define "title" }}{{ .Site.Title }} - Latest Cryptocurrency News{{ end }}
+{{ define "title" }}{{ .Site.Title }} - Aktuelle Kryptowährungs-Nachrichten{{ end }}
 
 {{ define "main" }}
 <div class="container">
     <section class="news-section">
-        <h2 class="section-title">Latest News</h2>
+        <h2 class="section-title">Aktuelle Nachrichten</h2>
 
         {{ $pages := where .Site.RegularPages "Section" "news" }}
         {{ if $pages }}
@@ -13,7 +13,7 @@
             {{ end }}
         </div>
         {{ else }}
-        <p class="no-news">No news articles available yet. Check back soon!</p>
+        <p class="no-news">Noch keine Artikel verfügbar. Schauen Sie bald wieder vorbei!</p>
         {{ end }}
     </section>
 </div>

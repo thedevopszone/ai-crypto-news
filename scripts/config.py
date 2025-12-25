@@ -58,3 +58,13 @@ NEWS_MAX_PER_QUERY = 100  # Max articles per GNews request
 
 # Top coins to prioritize in search query (use top 20 for aggregated search)
 TOP_PRIORITY_COINS = 20
+
+# OpenAI Configuration
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
+OPENAI_MAX_TOKENS = int(os.getenv("OPENAI_MAX_TOKENS", "2000"))
+
+# Scraping Configuration
+SCRAPE_TIMEOUT = 15  # seconds
+SCRAPE_DELAY = 2  # seconds between requests
+USER_AGENT = "Mozilla/5.0 (compatible; CryptoNewsBot/1.0)"

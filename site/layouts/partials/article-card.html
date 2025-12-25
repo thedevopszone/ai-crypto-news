@@ -9,14 +9,13 @@
 
     <div class="article-content">
         <h3 class="article-title">
-            <a href="{{ .Params.sourceUrl }}" target="_blank" rel="noopener noreferrer">
+            <a href="{{ .Permalink }}">
                 {{ .Title }}
             </a>
         </h3>
 
         <div class="article-meta">
-            <span class="article-source">{{ .Params.source }}</span>
-            <span class="article-date">{{ .Date.Format "Jan 2, 2006" }}</span>
+            <span class="article-date">{{ .Date.Format "2. January 2006" }}</span>
         </div>
 
         {{ if .Params.description }}
@@ -31,8 +30,8 @@
         </div>
         {{ end }}
 
-        <a href="{{ .Params.sourceUrl }}" target="_blank" rel="noopener noreferrer" class="read-more">
-            Read Full Article →
+        <a href="{{ .Permalink }}" class="read-more">
+            Weiterlesen →
         </a>
     </div>
 </article>

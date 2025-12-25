@@ -1,0 +1,31 @@
+{{ define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+<div class="container">
+    <article class="article-detail">
+        <header class="article-header">
+            <h1>{{ .Title }}</h1>
+            <div class="article-meta">
+                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006") }}</time>
+                {{ with .Params.coins }}
+                <div class="article-tags">
+                    {{ range . }}
+                    <span class="tag">{{ . }}</span>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </header>
+
+        {{ if .Params.image }}
+        <div class="article-featured-image">
+            <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy">
+        </div>
+        {{ end }}
+
+        <div class="article-content">
+            {{ .Content }}
+        </div>
+    </article>
+</div>
+{{ end }}

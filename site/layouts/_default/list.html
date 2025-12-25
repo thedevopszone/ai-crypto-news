@@ -1,0 +1,25 @@
+{{ define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+<div class="container">
+    <section class="news-section">
+        <h1 class="section-title">{{ .Title }}</h1>
+
+        {{ if .Content }}
+        <div class="section-content">
+            {{ .Content }}
+        </div>
+        {{ end }}
+
+        {{ if .Pages }}
+        <div class="articles-grid">
+            {{ range .Pages }}
+                {{ partial "article-card.html" . }}
+            {{ end }}
+        </div>
+        {{ else }}
+        <p class="no-news">No articles available yet.</p>
+        {{ end }}
+    </section>
+</div>
+{{ end }}

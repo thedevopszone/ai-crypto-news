@@ -1,0 +1,21 @@
+{{- $pages := where .Site.RegularPages "Section" "news" -}}
+[
+  {{- range $index, $page := $pages -}}
+    {{- if $index -}},{{- end }}
+    {
+      "title": {{ $page.Title | jsonify }},
+      "date": {{ $page.Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+      "permalink": {{ $page.Permalink | jsonify }},
+      "summary": {{ $page.Summary | jsonify }},
+      "content": {{ $page.Plain | jsonify }}
+      {{- with $page.Params.coins -}}
+      ,
+      "coins": {{ . | jsonify }}
+      {{- end -}}
+      {{- with $page.Params.source -}}
+      ,
+      "source": {{ . | jsonify }}
+      {{- end -}}
+    }
+  {{- end -}}
+]

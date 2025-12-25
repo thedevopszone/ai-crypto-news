@@ -111,13 +111,6 @@ def generate_article_content(article):
         content_parts.append(content)
         content_parts.append('')
 
-    # Add link to original article
-    source_url = article.get('url', '')
-    source_name = article.get('source', {}).get('name', 'source')
-    if source_url:
-        content_parts.append(f"[Read full article on {source_name}]({source_url})")
-        content_parts.append('')
-
     # Add coin tags
     coins = article.get('coins', [])
     if coins:
@@ -191,6 +184,37 @@ def cleanup_old_articles(days_to_keep=DAYS_TO_KEEP):
         logger.info("No old articles to remove")
 
 
+def get_existing_source_urls():
+    """
+    Get all source URLs from existing articles
+
+    Returns:
+        Set of source URLs
+    """
+    existing_urls = set()
+
+    if not CONTENT_DIR.exists():
+        return existing_urls
+
+    for filepath in CONTENT_DIR.glob('*.md'):
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+                # Extract front matter
+                if content.startswith('---'):
+                    parts = content.split('---', 2)
+                    if len(parts) >= 2:
+                        front_matter = yaml.safe_load(parts[1])
+                        source_url = front_matter.get('sourceUrl', '')
+                        if source_url:
+                            existing_urls.add(source_url)
+        except Exception as e:
+            logger.warning(f"Error reading {filepath.name}: {e}")
+            continue
+
+    return existing_urls
+
+
 def generate_content_from_articles(articles):
     """
     Generate Hugo content files from a list of articles
@@ -206,31 +230,36 @@ def generate_content_from_articles(articles):
     # Ensure content directory exists
     CONTENT_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Track existing files to avoid duplicates
-    existing_files = set(f.name for f in CONTENT_DIR.glob('*.md'))
+    # Get existing source URLs to avoid duplicates
+    existing_urls = get_existing_source_urls()
+    logger.debug(f"Found {len(existing_urls)} existing articles")
 
     generated_files = []
     skipped_count = 0
 
     for article in articles:
-        filename = generate_article_filename(article)
+        source_url = article.get('url', '')
 
-        # Skip if file already exists
-        if filename in existing_files:
-            logger.debug(f"Skipping existing article: {filename}")
+        # Skip if article with same source URL already exists
+        if source_url in existing_urls:
+            logger.debug(f"Skipping duplicate article from: {source_url}")
             skipped_count += 1
             continue
+
+        filename = generate_article_filename(article)
 
         try:
             filepath = write_article_file(article, filename)
             generated_files.append(filepath)
+            # Add to existing URLs to avoid duplicates within this batch
+            existing_urls.add(source_url)
         except Exception as e:
             logger.error(f"Error writing article {filename}: {e}")
             continue
 
     logger.info(f"Generated {len(generated_files)} new articles")
     if skipped_count > 0:
-        logger.info(f"Skipped {skipped_count} existing articles")
+        logger.info(f"Skipped {skipped_count} duplicate articles")
 
     return generated_files
 
